@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\Post;
 class PostController extends Controller
 {
     /**
@@ -15,7 +15,9 @@ class PostController extends Controller
     public function index()
     {
         
-        $post = DB::table('post')->get();
+        // $post = DB::table('post')->get();
+        $post = Post::all();
+        // dd($post);
         return view('table-post.index', compact('post'));
 
     }
@@ -44,10 +46,25 @@ class PostController extends Controller
             'body' => 'required',
         ]);
         
-        $query = DB::table('post')->insert([
+        // Menggunakan MEtode Query Builder
+        // $query = DB::table('post')->insert([
+        //     "title" => $request["title"],
+        //     "body" => $request["body"]
+        // ]);
+
+
+        // Menggunakan Metode ORM
+        // $post = new Post;
+        // $post->title = $request["title"];
+        // $post->body =  $request["body"];
+        // $post->save();
+
+        //Menggunakan Mass Assigment
+        $post  = Post::create([
             "title" => $request["title"],
             "body" => $request["body"]
         ]);
+
         return redirect('layout/post')->with('success', 'Data Berhasil di tambah');
 
     }
@@ -60,8 +77,13 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $show = DB::table('post')->where('id', $id)->get();
-        return view('table-post.show', ['show'=>$show]);
+        // $show = DB::table('post')->where('id', $id)->get();
+        //menggunakan find
+        $post = Post::find($id);
+
+        //menggunakan WHere 
+        // $post = Post::where('id', $id)->first();
+        return view('table-post.show', compact('post'));
 
     }
 
@@ -73,7 +95,8 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = DB::table('post')->where('id', $id)->first();
+        // $post = DB::table('post')->where('id', $id)->first();
+        $post = Post::find($id);
         return view('table-post.edit', compact('post'));
 
     }
@@ -88,16 +111,22 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'title' => 'required|unique:post',
+            'title' => 'required',
             'body' => 'required',
         ]);
 
-        $query = DB::table('post')
-            ->where('id', $id)
-            ->update([
-                'title' => $request["title"],
-                'body' => $request["body"]
-            ]);
+        // $query = DB::table('post')
+        //     ->where('id', $id)
+        //     ->update([
+        //         'title' => $request["title"],
+        //         'body' => $request["body"]
+        //     ]);
+
+        //menggunakan where
+        $update = Post::where('id',$id)->update([
+            "title"=> $request["title"],
+            "body"=>$request["body"]
+        ]);
         return redirect('/layout/post')->with('success','Data Berhasil Di Ubah');
 
     }
@@ -110,7 +139,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-         $query = DB::table('post')->where('id', $id)->delete();
+        //  $query = DB::table('post')->where('id', $id)->delete();
+
+        $post = Post::destroy($id);
         return redirect('/layout/post')->with('success','Data berhasil Di hapus');
 
     }

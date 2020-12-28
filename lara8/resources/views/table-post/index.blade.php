@@ -6,8 +6,8 @@
  {{session('success')}}
     </div>
 @endif
-<a href="/layout/post/create" class="btn btn-primary">[+Tambah+]</a>
-
+<a href="{{route('post.create')}}" class="btn btn-primary">[+Tambah+]</a>
+               
 <table class="table">
     <thead class="thead-light">
               <tr>
@@ -27,8 +27,8 @@
                             <form action="/layout/post/{{$value->id}}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <a href="/layout/post/{{$value->id}}/show" class="btn btn-info">Show</a>|
-                                <a href="/layout/post/{{$value->id}}/edit" class="btn btn-primary">Edit</a>|
+                                <a href="{{route('post.show',$value->id)}}" class="btn btn-info">Show</a>|
+                                <a href="{{route('post.edit',$value->id)}}" class="btn btn-primary">Edit</a>|
                                 <button type="submit" class="btn btn-danger my-1" value="Delete">Delete</button>
                             </form>
                         </td>

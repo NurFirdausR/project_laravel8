@@ -33,35 +33,50 @@
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
-       
+             <li class="nav-item has-treeview">
+              <a href="" class="nav-link ">
+                <i class="nav-icon far fa-plus-square"></i>
+                <p>
+                  Tugas 3 templating
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                
+                <li class="nav-item">
+                  <a href="/table-data" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Table</p>
+                  </a>
+                </li>
+               
+              </ul>
+            </li>
+
         <li class="nav-item has-treeview">
           <a href="" class="nav-link ">
             <i class="nav-icon far fa-plus-square"></i>
             <p>
-              Tugas 3 templating
+              Tugas CRUD 
               <i class="fas fa-angle-left right"></i>
             </p>
           </a>
           <ul class="nav nav-treeview">
             
+           
             <li class="nav-item">
-              <a href="/table-data" class="nav-link">
+              <a href={{"/layout/post/create"}} class="nav-link ">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Table</p>
+                <p>Tambah Data</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="" class="nav-link ">
+              <a href={{"/layout/post/"}} class="nav-link ">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Blank Page</p>
+                <p>Tampil Tabel</p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="{{asset('template')}}/starter.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Starter Page</p>
-              </a>
-            </li>
+            
           </ul>
         </li>
       </ul>

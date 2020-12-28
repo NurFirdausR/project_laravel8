@@ -9,11 +9,11 @@ class AuthController extends Controller
     //
     public function req()
     {
-        return view("register");
+        return view("daftar");
     }
 
 
-    public function registerSubmit(Request $request)
+    public function daftarSubmit(Request $request)
     {
         $Fname = $request->input('firstname');
         $Lname = $request->input('lastname');

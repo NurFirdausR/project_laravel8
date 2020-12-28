@@ -8,7 +8,7 @@ class HomeController extends Controller
 {
     public function routeIndex()
     {
-       return view("home");
+       return view("rumah");
     }
    
 }

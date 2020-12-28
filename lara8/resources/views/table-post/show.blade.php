@@ -12,30 +12,14 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-    <a href="{{'/layout/post/create'}}" class="btn btn-primary mb-3">Create New Data</a>
+    <a href="{{route('post.create')}}" class="btn btn-primary mb-3">Create New Data</a>
 
-    <table class="table table-bordered">
-    <thead class="text-center">
-        <tr>
-        <th style="width: 2%;">No</th>
-        <th style="width: 30%;">Title</th>
-        <th style="width: 30%;">Body</th>
-        <th style="width: 10%">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-    @foreach ($show as $data)
-        <th class="text-center">{{$loop->iteration}}</th>
-        <td>{{$data->title}}</td>
-        <td>{{$data->body}}</td>
-        <td align="center">
-            <a href="/layout/post" class="btn btn-primary btn-m">Back</a>
-        </td>
-        </tr>
-    @endforeach
-    </tbody>
-</table>
+    
+    <h2>Show Post ID =>{{$post->id}}</h2>
+    <h4>Title =>{{$post->title}}</h4>
+    <p> Body => {{$post->body}}</p>
+    
+    <a href="{{route('post.index')}}" class="btn btn-primary btn-m">Back</a>
     </div>
 </div>
 @endsection
