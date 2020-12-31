@@ -14,7 +14,8 @@ class AddFkProfileToProfile extends Migration
     public function up()
     {
         Schema::table('profile', function (Blueprint $table) {
-            //
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -26,7 +27,8 @@ class AddFkProfileToProfile extends Migration
     public function down()
     {
         Schema::table('profile', function (Blueprint $table) {
-            //
+            $table->dropForeign(['user_id']);
+            $table->dropColumn(['user_id']);
         });
     }
 }

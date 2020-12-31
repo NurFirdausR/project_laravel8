@@ -27,6 +27,10 @@
             </div>
         @enderror
     </div>
+    <div class="form-group">
+        <label for="tags">Tags</label>
+        <input type="text" class="form-control" name="tags" id="tags" value="{{old('tags','')}}" placeholder="">
+    </div>
     <button type="submit" class="btn btn-primary">Tambah</button>
 </form>
 </div>

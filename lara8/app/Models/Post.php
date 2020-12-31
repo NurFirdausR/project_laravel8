@@ -14,4 +14,12 @@ class Post extends Model
 
     //menggunakan guarded
     protected $guarded = [];
+    public function user()
+    {
+            return $this->belongsTo(User::class);
+    }
+    public function tags()
+    {
+            return $this->belongsToMany(Tag::class,'post_tag','post_id','tag_id');
+    }
 }

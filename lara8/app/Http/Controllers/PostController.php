@@ -5,8 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Post;
+use App\Models\Tag;
+use Illuminate\Support\Facades\Auth;
 class PostController extends Controller
 {
+
+
+    public function __construct()
+    {
+       $this->middleware(['auth:sanctum', 'verified']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +24,10 @@ class PostController extends Controller
     {
         
         // $post = DB::table('post')->get();
-        $post = Post::all();
-        // dd($post);
+        $user = Auth::user();
+        
+        $post = $user->posts; 
+                // dd($post);
         return view('table-post.index', compact('post'));
 
     }
@@ -45,25 +55,52 @@ class PostController extends Controller
             'title' => 'required|unique:post',
             'body' => 'required',
         ]);
-        
-        // Menggunakan MEtode Query Builder
-        // $query = DB::table('post')->insert([
-        //     "title" => $request["title"],
-        //     "body" => $request["body"]
-        // ]);
+        //1.explode untuk menggubah request tags menjadi array
+        $tags_arr = explode(',',$request["tags"]);
+        // dd($tags_arr);
+        //2.looping array teks yang tadi ,buat array penampung  
+        //3.setiap sekali looping lakukan pengecekan apakah sudah ada tag nya
+        //4.kalo sudah ada ambil id nya
+        //5.kalo belom ada simpan dulu tag nya, lalu ambil id nya
+        //6.tampung id di array penampung
+        $tag_ids = [];
+        foreach($tags_arr as $tag_name){
+            $tag = Tag::firstOrCreate(["tag_name" => $tag_name]);
+            $tag_ids[] = $tag->id;
+            // if ($tag) {
+            //     $tag_ids[] = $tag->id;
+            // }else{
+            //     $new_tag = Tag::create(["tag_name"=>$tag_name]);
+            //     $tag_ids[] = $new_tag->id;
+            // }
+        }
+    //  $a  = wdw:ss{{
 
-
-        // Menggunakan Metode ORM
-        // $post = new Post;
-        // $post->title = $request["title"];
-        // $post->body =  $request["body"];
-        // $post->save();
+         // dd($tag_ids);
+         // Menggunakan MEtode Query Builder
+         // $query = DB::table('post')->insert([
+         //     "title" => $request["title"],
+         //     "body" => $request["body"]
+         // ]);
+ 
+ 
+         // Menggunakan Metode ORM
+         // $post = new Post;
+         // $post->title = $request["title"];
+         // $post->body =  $request["body"];
+         // $post->save();
+    //   }}
 
         //Menggunakan Mass Assigment
+        
+
         $post  = Post::create([
             "title" => $request["title"],
-            "body" => $request["body"]
+            "body" => $request["body"],
+            "user_id" => Auth::id(),
+            
         ]);
+        $post->tags()->sync($tag_ids);
 
         return redirect('layout/post')->with('success', 'Data Berhasil di tambah');
 
